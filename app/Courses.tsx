@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from 'react';
 import {Text, StyleSheet,View,ScrollView,Image, FlatList,ActivityIndicator} from "react-native";
-import MainView from '@/components/MainView';
+import MainView from '../components/MainView';
 import { Searchbar } from 'react-native-paper';
-import Course from '@/components/Course';
+import Course from '../components/Course';
 
 
 const Courses: React.FC=()=>{

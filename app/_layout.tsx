@@ -5,18 +5,20 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useColorScheme } from '../hooks/useColorScheme';
 import SignUp from './SignUp';
 import Login from './Login';
 // import store from './store';
-import MainView from '@/components/MainView';
+import MainView from '../components/MainView';
 import { Cart } from '../components/Cart';
 import { CartProvider } from '../components/Cart';
 import CartDetails from './CartDetails';
-import Services from '@/app/(tabs)/Services';
+import Services from './(tabs)/Services';
 import Courses from './Courses';
+import Profile from './(tabs)/Profile'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -41,8 +43,6 @@ export default function RootLayout() {
   }
 
   return (
-   
-      <ThemeProvider value={colorScheme === 'light'? DefaultTheme : DarkTheme}>
         <CartProvider>
           <MainView>
          
@@ -52,11 +52,12 @@ export default function RootLayout() {
               {/* <Stack.Screen name="+not-found" /> */}
               <Stack.Screen name='Services'/>
               <Stack.Screen name='Courses'/>
+              <Stack.Screen name='Profile'/>
+              
              
             </Stack>
           
           </MainView>
         </CartProvider>
-      </ThemeProvider>
   );
 }

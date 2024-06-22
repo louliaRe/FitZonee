@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Button, Snackbar } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import CustomTextInput from '@/components/CustomTextInput';
-import Logo1 from '@/components/Logo1';
+import CustomTextInput from '../components/CustomTextInput';
+import Logo1 from '../components/Logo1';
 import _layout from './(tabs)/_layout';
 
 const Login: React.FC = () => {

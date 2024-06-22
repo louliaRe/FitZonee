@@ -1,9 +1,9 @@
 import React, { useEffect,useState } from 'react';
 import {Text, StyleSheet,View,ScrollView,Image, FlatList,ActivityIndicator} from "react-native";
-import Product from '@/components/Product';
-import MainView from '@/components/MainView';
-import { useCart, CartProvider } from '@/components/Cart';
-import CartDisplay from '@/components/CartDisplay';
+import Product from '../../components/Product';
+import MainView from '../../components/MainView';
+import { useCart, CartProvider } from '../../components/Cart';
+import CartDisplay from '../../components/CartDisplay';
 import { Searchbar } from 'react-native-paper';
 
 
@@ -36,7 +36,7 @@ const store: React.FC=()=>{
     const sampleProduct = {
         name: 'Example',
         price: 29.99,
-        image: ('@/assets/images/woman.jpg'), 
+        image: ('../../assets/images/woman.jpg'), 
       };
       
 
@@ -54,7 +54,7 @@ const store: React.FC=()=>{
         <ScrollView style={styles.container}>
           
                     <Image
-            source={require('@/assets/images/store.jpeg')}
+            source={require('../../assets/images/store.jpeg')}
             style={styles.img}
           />
           

@@ -1,8 +1,9 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import {TabBarIcon} from '../../components/navigation/TabBarIcon';
+import { Colors } from '../../constants/Colors';
+import { useColorScheme } from '../../hooks/useColorScheme';
+import MainView from '../../components/MainView';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -10,6 +11,7 @@ export default function TabLayout() {
 
   
   return (
+    <MainView>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -33,7 +35,26 @@ export default function TabLayout() {
           ),
         }}
       />
+         <Tabs.Screen
+        name="Profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'person':'person'} color={color} />
+          ),
+        }}
+      />
+          <Tabs.Screen
+        name="Community"
+        options={{
+          title: 'Community',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'newspaper':'person'} color={color} />
+          ),
+        }}
+      />
   
     </Tabs>
+    </MainView>
   );
 }

@@ -1,7 +1,7 @@
     import React, { useState } from 'react';
     import {Text, StyleSheet,View,ScrollView} from "react-native"
     import { Button,Snackbar,RadioButton } from 'react-native-paper';
-    import CustomTextInput from '@/components/CustomTextInput';
+    import CustomTextInput from '../components/CustomTextInput';
     import { useNavigation } from '@react-navigation/native';
     import { Stack, router } from 'expo-router';
 

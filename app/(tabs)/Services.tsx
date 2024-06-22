@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text } from 'react-native-paper';
 import {View,FlatList, StyleSheet, TouchableOpacity} from 'react-native';
-import ServicesCard from'@/components/ServicesCard';
-import MainView from '@/components/MainView';
+import ServicesCard from'../../components/ServicesCard';
+import MainView from '../../components/MainView';
 import { useRouter } from 'expo-router';
 import Courses from '../Courses';
 
 const services = [
-    { id: '1', name: 'Courses', image: require('@/assets/images//Courses.jpg') },
-    { id: '2', name: 'Private Training', image: require('@/assets/images//private.jpg')  },
-    { id: '3', name: 'Build Body', image: require('@/assets/images/build.jpg')},
+    { id: '1', name: 'Courses', image: require('../../assets/images/Courses.jpg') },
+    { id: '2', name: 'Private Training', image: require('../../assets/images/private.jpg')  },
+    { id: '3', name: 'Build Body', image: require('../../assets/images/build.jpg')},
   ];
 
  

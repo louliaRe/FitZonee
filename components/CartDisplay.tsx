@@ -4,7 +4,7 @@ import { useCart } from './Cart';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from "react-native-paper";
 import { useRouter } from "expo-router";
-import CartDetails from "@/app/CartDetails";
+import CartDetails from "../app/CartDetails";
 
 const CartDisplay = () => {
   const { cart, getTotalPrice,addToCart, removeFromCart } = useCart();

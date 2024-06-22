@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View, StyleSheet } from 'react-native';
-import { useCart } from '@/components/Cart';
+import { useCart}  from '../components/Cart';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from "react-native-paper";
 import { useRouter } from "expo-router";
-import MainView from "@/components/MainView";
+import MainView from "../components/MainView";
 
 
 
