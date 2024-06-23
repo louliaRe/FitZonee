@@ -49,7 +49,7 @@ export default function TabLayout() {
         options={{
           title: 'Community',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'newspaper':'person'} color={color} />
+            <TabBarIcon name={focused ? 'newspaper':'newspaper'} color={color} />
           ),
         }}
       />

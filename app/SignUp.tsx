@@ -4,6 +4,7 @@
     import CustomTextInput from '../components/CustomTextInput';
     import { useNavigation } from '@react-navigation/native';
     import { Stack, router } from 'expo-router';
+    import CustomNumberInput from '../components/CustomNumberInput';
 
 
     const SignUp: React.FC =()=>{
@@ -37,6 +38,10 @@
             {
                setErrorMessage('Weight must be a positive number if provided.');
                onToggleSnackBar();
+            }  else if(height !==null && height <= 0)
+            {
+               setErrorMessage('Weight must be a positive number if provided.');
+               onToggleSnackBar();
             }else{
                 router.push('/Login');
             }
@@ -60,25 +65,24 @@
                 onChangeText={(e) => setLName(e)}
                  autoFocus
                   />
-                   <CustomTextInput
-                 label="age"
-                 value={age ? age.toString() : ''}
-                 onChangeText={(text) => setAge(Number(text))}
-                 autoFocus
-                  />
-                   <CustomTextInput
-                 label="Height"
-                 value={height ? height.toString() : ''}
-                 onChangeText={(text) => setHeight(Number(text))}
-                 autoFocus
-                  />
-                     <CustomTextInput
-                 label="Weight"
-                 value={weight ? weight.toString() : ''}
-                 onChangeText={(text) => setWeight(Number(text))}
-                 autoFocus
-                  />
-
+        <CustomNumberInput
+        label="Age"
+        value={age ? age.toString() : ''}
+        onChangeText={(text) => setAge(Number(text))}
+        autoFocus
+      />
+      <CustomNumberInput
+        label="Height"
+        value={height ? height.toString() : ''}
+        onChangeText={(text) => setHeight(Number(text))}
+        autoFocus
+      />
+      <CustomNumberInput
+        label="Weight"
+        value={weight ? weight.toString() : ''}
+        onChangeText={(text) => setWeight(Number(text))}
+        autoFocus
+      />
                 <CustomTextInput
         label="Email"
         value={email}
