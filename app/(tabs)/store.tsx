@@ -17,11 +17,9 @@ const store: React.FC=()=>{
 
 
   // useEffect(() => {
-  //   // Fetch product data from your backend API
-  //   // Replace with actual API call
   //   const fetchProducts = async () => {
   //     try {
-  //       const response = await fetch('your_backend_api/products');
+  //       const response = await fetch('api');
   //       const data = await response.json();
   //       setProducts(data);
   //       setLoading(false);
@@ -37,6 +35,7 @@ const store: React.FC=()=>{
         name: 'Example',
         price: 29.99,
         image: ('../../assets/images/woman.jpg'), 
+        category:'meal'
       };
       
 

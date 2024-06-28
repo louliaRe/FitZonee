@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useEffect} from "react";
+
 import { Text, View, StyleSheet } from 'react-native';
 import { useCart}  from '../components/Cart';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,10 +9,14 @@ import MainView from "../components/MainView";
 
 
 
+
 const CartDetails=()=>{
-    const { cart, getTotalPrice, addToCart,removeFromCart } = useCart();
+    const { cart, getTotalPrice } = useCart();
     const router = useRouter();
 
+    useEffect(() => {
+      console.log(cart); 
+  }, [cart]); 
 
     return (
         <MainView>     
@@ -41,8 +46,8 @@ const styles=StyleSheet.create({
     },
     header:{
         flexDirection: 'row',
-        alignItems: 'center', // Change to 'center' to align items vertically centered
-        justifyContent: 'flex-start', // Ensure the icon and text are close to each other
+        alignItems: 'center', 
+        justifyContent: 'flex-start', //  icon and text close to each other
         padding: 10,
       },
     cartIcon:{

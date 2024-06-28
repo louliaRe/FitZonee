@@ -20,7 +20,7 @@ const Login: React.FC = () => {
     }, 1500);
     const t = setTimeout(() => {
       router.push("/Login");
-    }, 5000);
+    }, 2000);
   }, []);
 
 

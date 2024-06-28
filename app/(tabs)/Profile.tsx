@@ -44,12 +44,9 @@ const UserProfile: React.FC = () => {
   // useEffect(() => {
   //   const fetchUserData = async () => {
   //     try {
-  //       const response = await fetch('https://api.example.com/user/profile');
-  //       if (!response.ok) {
-  //         throw new Error('Failed to fetch user data');
-  //       }
-  //       const data: User = await response.json();
-  //       setUser(data);
+  //       const response = await fetch('api for user profile');
+  //       console.log(response);
+  //      
   //     } catch (err) {
   //       setError(err.message);
   //     } finally {
@@ -63,7 +60,7 @@ const UserProfile: React.FC = () => {
   // if (loading) {
   //   return (
   //     <View style={styles.loaderContainer}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
+  //       <ActivityIndicator size="large" color="" />
   //     </View>
   //   );
   // }

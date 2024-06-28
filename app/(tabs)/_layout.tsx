@@ -27,9 +27,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="store"
+        name="Store"
         options={{
-          title: 'store',
+          title: 'Store',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'storefront':'storefront-outline'} color={color} />
           ),
@@ -40,7 +40,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'person':'person'} color={color} />
+            <TabBarIcon name={focused ? 'person':'person-outline'} color={color} />
           ),
         }}
       />
@@ -49,7 +49,7 @@ export default function TabLayout() {
         options={{
           title: 'Community',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'newspaper':'newspaper'} color={color} />
+            <TabBarIcon name={focused ? 'newspaper':'newspaper-outline'} color={color} />
           ),
         }}
       />

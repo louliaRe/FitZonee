@@ -10,7 +10,6 @@ import SignUp from './SignUp';
 import Login from './Login';
 // import store from './store';
 import MainView from '../components/MainView';
-import { Cart } from '../components/Cart';
 import { CartProvider } from '../components/Cart';
 import CartDetails from './CartDetails';
 import Services from './(tabs)/Services';
@@ -43,21 +42,22 @@ export default function RootLayout() {
   }
 
   return (
-        <CartProvider>
+    <CartProvider>
           <MainView>
-         
           <Stack>
           <Stack.Screen name='Login'/>
+         
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               {/* <Stack.Screen name="+not-found" /> */}
               <Stack.Screen name='Services'/>
               <Stack.Screen name='Courses'/>
               <Stack.Screen name='Profile'/>
-              
-             
+              <Stack.Screen name='CartDetails'/>
+            
             </Stack>
           
           </MainView>
-        </CartProvider>
+          </CartProvider>
+    
   );
 }
