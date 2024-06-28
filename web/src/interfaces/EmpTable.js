@@ -34,7 +34,6 @@ const EmpTable = () => {
   };
 
   return (
-    <Layout>
       <Container>
         <div className="TB">
           <h1 style={{ color: '#fff' }}>Employees</h1>
@@ -97,7 +96,6 @@ const EmpTable = () => {
         </div>
         <Emp initdata={emps} />
       </Container>
-    </Layout>
   );
 };
 
