@@ -9,7 +9,6 @@ import './MainAdminP.css'
 
 const Managerinterface=()=>{
     return (
-        <Layout> 
             <Container  className="container">
            <div className="c">
        <AdminStatistics />
@@ -19,7 +18,6 @@ const Managerinterface=()=>{
         </div>
       </Container>
      
-      </Layout>
      )
 
 }

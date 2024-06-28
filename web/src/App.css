@@ -6,7 +6,15 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 }
+.header{
+  background-color: #2C2C2C;
+  padding:10px 20px;
 
+}
+.nav{
+  background-color: #2C2C2C;
+  padding:10px 20px ;
+}
 h1 {
   color: #fff;
 }
