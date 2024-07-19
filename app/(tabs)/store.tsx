@@ -49,7 +49,6 @@ const store: React.FC=()=>{
     
       return (
         <MainView>
-          <CartProvider>
         <ScrollView style={styles.container}>
           
                     <Image
@@ -75,7 +74,6 @@ const store: React.FC=()=>{
           
 <CartDisplay/>
         </ScrollView>
-        </CartProvider>
         </MainView>
       );
     };

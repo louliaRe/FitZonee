@@ -15,9 +15,10 @@ import CartDetails from './CartDetails';
 import Services from './(tabs)/Services';
 import Courses from './Courses';
 import Profile from './(tabs)/Profile'
-
+import CoachHome from './CoachHome'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import { AuthProvider } from './AuthContext';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -42,7 +43,9 @@ export default function RootLayout() {
   }
 
   return (
+    <AuthProvider>
     <CartProvider>
+
           <MainView>
           <Stack>
           <Stack.Screen name='Login'/>
@@ -53,11 +56,14 @@ export default function RootLayout() {
               <Stack.Screen name='Courses'/>
               <Stack.Screen name='Profile'/>
               <Stack.Screen name='CartDetails'/>
+              <Stack.Screen name='CoachHome'/>
+              <Stack.Screen name='ClientsList'/>
             
             </Stack>
           
           </MainView>
           </CartProvider>
+          </AuthProvider>
     
   );
 }

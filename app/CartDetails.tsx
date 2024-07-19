@@ -96,7 +96,7 @@ const styles=StyleSheet.create({
         position:'absolute',
         marginLeft:'75%',
     
-        backgroundColor:'#a9f368',
+        backgroundColor:'#a1E533',
         
       }
 })

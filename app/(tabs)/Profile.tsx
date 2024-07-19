@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Card, Avatar, Title, Paragraph } from 'react-native-paper';
+import { Card, Avatar, Title, Paragraph, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MainView from '../../components/MainView';
+import { useAuth } from '../AuthContext';
 
 
 interface Course {
@@ -37,53 +38,17 @@ const staticUser: User = {
 
 const UserProfile: React.FC = () => {
   const user = staticUser;
-  // const [user, setUser] = useState<User | null>(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await fetch('api for user profile');
-  //       console.log(response);
-  //      
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-  // if (loading) {
-  //   return (
-  //     <View style={styles.loaderContainer}>
-  //       <ActivityIndicator size="large" color="" />
-  //     </View>
-  //   );
-  // }
-
-  // if (error) {
-  //   return (
-  //     <View style={styles.errorContainer}>
-  //       <Text style={styles.errorText}>{error}</Text>
-  //     </View>
-  //   );
-  // }
-
-  // if (!user) {
-  //   return null;
-  // }
-
+  const {authState,logout} = useAuth();
+  const { username } = authState;
+console.log("user:",username);
+ 
   return (
     <MainView>
     <ScrollView style={styles.container}>
       <View style={styles.header}>
       <Avatar.Icon  style={styles.pic} size={80} icon="account" />
         <View style={styles.userInfo}>
-          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.name}>{username}</Text>
           <Text style={styles.details}>Age: {user.age}</Text>
           <Text style={styles.details}>Height: {user.height} cm</Text>
           <Text style={styles.details}>Weight: {user.weight} kg</Text>
@@ -109,6 +74,8 @@ const UserProfile: React.FC = () => {
           ))}
         </Card.Content>
       </Card>
+     
+      <Button style={styles.btn} onPress={logout}>logout</Button>
     </ScrollView>
     </MainView>
   );
@@ -134,8 +101,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: 'bold',
-    color:'#a9f368',
+    color:'#a1E533',
   },
+  btn: {
+   
+    backgroundColor: '#a1E533',
+    color:"#fff",
+},
   details: {
     fontSize: 16,
     color: '#fff',
@@ -149,7 +121,7 @@ const styles = StyleSheet.create({
   color:'#fff'
   },
   title:{
-    color:'#a9f368',
+    color:'#a1E533',
 
   },
   course: {
