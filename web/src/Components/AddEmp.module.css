@@ -1,10 +1,4 @@
-body{
-display: flex;
-justify-content: center;
-align-items: center;
-align-content: center;
-text-align: center;
-}
+
 .card {
     background-color: #a1E533;
     cursor: pointer;
