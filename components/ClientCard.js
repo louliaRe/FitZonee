@@ -1,14 +1,43 @@
-// components/ClientCard.js
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { useAuth } from '../app/AuthContext';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { getTraineeDetails } from '../app/API/CoachAPI';
 
-const ClientCard = ({ client, onPress }) => {
+const ClientCard = ({ onPress, client }) => {
+   const {authState}= useAuth();
+  //  const { client: client}= useLocalSearchParams();
+   const [trainer, setTrainer]= useState({client})
+ 
+   console.log("cl inside card", client)
+   console.log("tr inside card", trainer)
+
+   console.log("trainer inside card id", trainer.client.client_id)
+
+
+
+  //  useEffect(() => {
+  //   const fetchDetails = async () => {
+  //     try {
+  //       const details = await getTraineeDetails(trainer.client.client_id, authState.accessToken);
+  //       console.log("res of trainee's details", details);
+  //     } catch (e) {
+  //       console.log("err of trainee details", e);
+  //       alert("error", e); 
+  //     }
+  //   };
+  
+  //   fetchDetails(); 
+  // }, []);
+
+
   return (
     <TouchableOpacity onPress={() => onPress(client)} style={styles.card}>
-      <Image source={{ uri: client.image }} style={styles.image} />
+      <FontAwesome name="user" size={40} color="#a1E533" style={styles.image}/>  
       <View style={styles.info}>
-        <Text style={styles.name}>{client.name}</Text>
-        <Text style={styles.age}>{client.age} years old</Text>
+        <Text style={styles.name}>{client.username}</Text>
+        <Text style={styles.age}> trainee's num {client.cliend_id} </Text>
       </View>
     </TouchableOpacity>
   );
