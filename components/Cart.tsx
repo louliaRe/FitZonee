@@ -5,7 +5,11 @@ interface Product {
   name: string;
   image: string;
   price: number;
-  quantity?: number;
+  amount?: number;
+  branch_product_id: number;
+  branch_id: number;
+  offer_id:number;
+  voucher: string;
 }
 
 interface CartContextProps {
@@ -13,6 +17,7 @@ interface CartContextProps {
   addToCart: (product: Product) => void;
   removeFromCart: (product: Product) => void;
   getTotalPrice: () => number;
+  clearCart: () => void;
 }
 
 interface CartProviderProps {
@@ -26,32 +31,38 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const addToCart = (product: Product) => {
     setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item.name === product.name);
+      const existingProduct = prevCart.find((item) => item.branch_product_id === product.branch_product_id);
       if (existingProduct) {
         return prevCart.map((item) =>
-          item.name === product.name? {...item, quantity: (item.quantity || 0) + 1 } : item
+          item.branch_product_id === product.branch_product_id
+            ? { ...item, amount: (item.amount || 0) + 1 }
+            : item
         );
       } else {
-        return [...prevCart, {...product, quantity: 1 }];
+        return [...prevCart, { ...product, amount: 1 }];
       }
     });
+    console.log("cart", cart);
   };
 
   const removeFromCart = (product: Product) => {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((item) => item.name === product.name);
-      if (existingProduct?.quantity === 1) {
+      if (existingProduct?.amount === 1) {
         return prevCart.filter((item) => item.name!== product.name);
       } else {
         return prevCart.map((item) =>
-          item.name === product.name? {...item, quantity: (item.quantity || 0) - 1 } : item
+          item.name === product.name? {...item, amount: (item.amount || 0) - 1 } : item
         );
       }
     });
   };
 
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * (item.quantity || 0), 0);
+    return cart.reduce((total, item) => total + item.price * (item.amount || 0), 0);
+  };
+  const clearCart = () => {
+    setCart([]);
   };
 
   useEffect(() => {
@@ -59,7 +70,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   }, [cart]); 
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotalPrice }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, getTotalPrice, clearCart }}>
       {children}
     </CartContext.Provider>
   );
