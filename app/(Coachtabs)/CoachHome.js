@@ -37,15 +37,14 @@ const CoachHome=()=>{
     return (
       <MainView>
         <ScrollView>
-          {/* Adding a gradient background for the text */}
-          <LinearGradient
-            colors={['#0022', '#a1E553']}
+          {/* <LinearGradient
+            colors={['#0022', '#a1E533']}
             style={styles.gradientBackground}
           >
             <Text style={styles.text}>
               Welcome back, Coach {authState.username}!!
             </Text>
-          </LinearGradient>
+          </LinearGradient> */}
           <CreatePost onPost={handleCreatePost} />
           <Community />
         </ScrollView>
