@@ -39,7 +39,7 @@ const TraineesProfile = () => {
   }
 
   //  data  available before trying to access 
-  const { client_details } = currentTrainee.instance;
+  const { client_details } = currentTrainee;
   const goalInfo = client_details.current_goal[0]; 
   const { BMI, fat_percentage } = client_details.body_data;
 
@@ -48,7 +48,13 @@ const TraineesProfile = () => {
    router.push("/CreateTrainingPlan");
   }
   const handleChatPress = () => {
-    router.push("/ChatScreen");
+    router.push({
+      pathname: '/ChatScreen',
+      params: {
+        isNewChat: true,
+        user_id: currentTrainee.client_details.user_id 
+      },
+    });
   };
 
   const handleNu=()=>{
@@ -99,8 +105,8 @@ const TraineesProfile = () => {
             <Paragraph style={styles.details}>Goal: {goalInfo.goal}</Paragraph>
             <Paragraph style={styles.details}>Goal Weight: {goalInfo.goal_weight} kg</Paragraph>
             <Paragraph style={styles.details}>Activity Level: {goalInfo.activity_level}</Paragraph>
-            <Paragraph style={styles.details}>BMI: {BMI.toFixed(2)}</Paragraph>
-            <Paragraph style={styles.details}>Fat Percentage: {fat_percentage.toFixed(2)}%</Paragraph>
+            <Paragraph style={styles.details}>BMI: {BMI}</Paragraph>
+            <Paragraph style={styles.details}>Fat Percentage: {fat_percentage}%</Paragraph>
    
             </Card.Content>
           </Card>
