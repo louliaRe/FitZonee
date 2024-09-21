@@ -1,42 +1,60 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import { getCoaches} from './API/ClientAPI';
+import { useAuth } from './AuthContext';
+import MainView from '../components/MainView';
 
 const PrivateCoaches = () => {
-  const router= useRouter();
-  const coaches = [
-    { id: 1, name: 'Coach A', specialization: 'Strength Training', imageUrl: 'https://via.placeholder.com/150', onlineTrainingPrice:10,privateTrainingPrice:30 },
-    { id: 2, name: 'Coach B', specialization: 'Cardio', imageUrl: 'https://via.placeholder.com/150', onlineTrainingPrice:10,privateTrainingPrice:30 },
-    { id: 3, name: 'Coach C', specialization: 'Zumba', imageUrl: 'https://via.placeholder.com/150', onlineTrainingPrice:10,privateTrainingPrice:30 },
-    { id: 4, name: 'Coach D', specialization: 'Yoga', imageUrl: 'https://via.placeholder.com/150' , onlineTrainingPrice:10,privateTrainingPrice:30},
-  ];
+  const router = useRouter();
+  const { authState } = useAuth();
+  const [coaches, setCoaches] = useState([]);
 
+  
+  useEffect(() => {
+    const fetchCoaches = async () => {
+      try {
+        const response = await getCoaches(authState.accessToken, authState.branch_id); 
+        console.log('response of get coaches:', response);  
+        setCoaches(response); 
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+      }
+    };
+    fetchCoaches();
+  }, [authState.accessToken]);
 
+  
   const handlePress = (coach) => {
-    console.log(`Pressed coach: ${coach.name}`);
-    router.push({pathname:'/CoachesDetails',
-                params: {coach:JSON.stringify(coach) }});
-
+    console.log(`Pressed coach: ${coach.employee.user.username}`);
+    router.push({
+      pathname: '/CoachesDetails',
+      params: { coach: JSON.stringify(coach) },
+    });
   };
 
   return (
+    <MainView>
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Coaches</Text>
       <View style={styles.carouselWrapper}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.carousel}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={true} style={styles.carousel}>
           {coaches.map((coach) => (
-            <TouchableOpacity key={coach.id} onPress={() => handlePress(coach)}>
-            <View key={coach.id} style={styles.coachCard} >
-              <Avatar.Icon style={styles.pic} size={80} icon="account" />
-              <Text style={styles.coachName}>{coach.name}</Text>
-              <Text style={styles.coachSpecialization}>{coach.specialization}</Text>
-            </View>
+            <TouchableOpacity key={coach.trainer_id} onPress={() => handlePress(coach)}>
+              <View style={styles.coachCard}>
+                <Avatar.Icon style={styles.pic} size={80} backgroundColor='#a1E533'  icon="account" />
+                <Text style={styles.coachName}>{coach.employee.user.username}</Text>
+                <Text style={styles.coachAge}><Text style={styles.coachTitle}>Age:</Text> {coach.employee.user.age}</Text>
+                <Text style={styles.coachAge}><Text style={styles.coachTitle}>Gender:</Text>  {coach.employee.user.gender? 'Female' : 'Male'}</Text>
+                <Text style={styles.coachEmail}><Text style={styles.coachTitle}>Email:</Text>  {coach.employee.user.email}</Text>
+              </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
     </View>
+    </MainView>
   );
 };
 
@@ -45,14 +63,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2C2C2C',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#a1E533',
     marginBottom: 80,
-    color:'#a1E533'
   },
   carouselWrapper: {
     flexDirection: 'row',
@@ -63,28 +79,42 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   coachCard: {
-    width: 150,
+    width: 210,
+    height:280,
     padding: 15,
     marginRight: 10,
-    backgroundColor: '#444',
+    backgroundColor: '#2c2c2c',
     borderRadius: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   coachName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#fff',
     marginTop: 10,
+    marginBottom: 10,
+    alignSelf:'center'
   },
-  coachSpecialization: {
+  coachTitle :{
+    fontWeight:'bold',
+    color:'#d0f297',
+    fontSize: 16,
+    alignSelf:'flex-start'
+  },
+  coachAge: {
     fontSize: 16,
     color: '#ccc',
     marginTop: 5,
   },
-    pic:{
-      backgroundColor:'#2C2C2C',
-      color:'#a1E533'
-     },  
+  coachEmail: {
+    fontSize: 13,
+    color: '#ccc',
+    marginTop: 5,
+  },
+  pic: {
+    alignSelf:'center',
+  },
+
 });
 
 export default PrivateCoaches;
