@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, View, ScrollView } from "react-native";
 import MainView from '../components/MainView';
 import { Searchbar } from 'react-native-paper';
 import Course from '../components/Course';
 import { useRouter } from 'expo-router';
+import {getClasses} from './API/ClientAPI';
+import { useAuth } from './AuthContext';
 
 
 const Courses = () => {
   const router = useRouter();
+  const { authState } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [courses, setCourses]= useState([]);
 
-  const sampleCourses = [
-    {
-      name: 'Course 1',
-      price: 40,
-      image: ('../../assets/images/Courses.jpg'),
-      startTime: '14:00:00',
-      endTime: '16:00:00',
-      startDate: new Date(new Date().setHours(12,0,0)),
-      endDate: new Date(new Date().setHours(12,0,0)),
-      daysOfWeek: {
-        "6": "friday"
-      },
-      hallNumber:2,
-      allowedCancelDays:1,
-      coach: 'jack',
-    },
-    {
-      name: 'Course 2',
-      price: 50,
-      image: ('../assets/images/Courses.jpg'),
-      time: new Date(new Date().setHours(14, 0, 0, 0)),
-    },
-  ];
+
+useEffect(()=>{
+  const fetchCourses= async ()=>{
+  try{
+   
+    const res = await getClasses(authState.accessToken, authState.branch_id);
+    console.log("fetchCourses res:", res);
+    const validCourses = res.filter(course => course !== null);
+    setCourses(validCourses);
+    console.log('validCourses', validCourses);
+  }catch(e){
+    console.log("err fetching courses",e);
+  }
+};fetchCourses();
+},[authState.accessToken, authState.branch_id])
+
+console.log ('courses', courses)
+
 
   return (
     <MainView>
@@ -44,8 +44,8 @@ const Courses = () => {
           style={styles.searchBar}
         />
         <View style={styles.courseContainer}>
-          {sampleCourses.map((course, index) => (
-            <Course key={index} course={course} />
+          {courses.map((course, index) => (
+            <Course key={course.class_id} course={course} />
           ))}
         </View>
       </ScrollView>
