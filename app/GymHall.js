@@ -30,12 +30,20 @@ const GymHall = () => {
 
         fetchHallData();
     }, [authState.accessToken, authState.branch_id]);
-
+        console.log ("ddd", hallData )
+        if (hallData){
+            if(hallData?.equipments){
+            console.log ("eee", hallData.equipments)
+            }else{
+                console.log ("no equipments")
+            }
+        }
     const handleMachinePress = (machine) => {
+        console.log("mach", machine)
         setSelectedMachine(machine);
         setModalVisible(true);
-
-        console.log("ss",  `${im}${selectedMachine.equipment_details.image_path}`)
+         console.log("selec", selectedMachine)
+        console.log("ss",  `${im}${selectedMachine?.equipment_details.image_path}`)
 
     };
 
@@ -97,9 +105,10 @@ const GymHall = () => {
                             <Card>
                              <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-                                <Card.Title style={styles.title} title={selectedMachine.equipment_details.name} />
+                                <Card.Title style={styles.title} title={selectedMachine.equipment_details?.name} />
                                 <Card.Content>
-                                    <Paragraph>{selectedMachine.equipment_details.description}</Paragraph>
+                                    <Paragraph>{selectedMachine?.equipment_details.description}</Paragraph>
+                                    <Text style={styles.status}>{selectedMachine.status}</Text>
                                        {selectedMachine.equipment_details?.image_path && (
                                         <Image
                                             style={styles.image}
@@ -126,7 +135,7 @@ const GymHall = () => {
             <View style={styles.hall}>
                 <Button 
                     mode='contained' 
-                    contentStyle={{ backgroundColor: 'lime' }} 
+                    contentStyle={{ backgroundColor: '#a1E533' }} 
                     labelStyle={{ color: '#fff' }}  
                     onPress={() => handleSession()}
                 >
@@ -149,7 +158,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        fontSize: 24,
+        fontSize: 28,
         marginBottom: 20,
         color: '#fff',
     },
@@ -200,6 +209,7 @@ const styles = StyleSheet.create({
     btn: {
         color: '#a1E533',
     },
+
 });
 
 export default GymHall;
