@@ -27,14 +27,16 @@ const UserProfile = () => {
   }, [authState.accessToken]);
 
   if (!userProfile) {
-    return <Text>Loading...</Text>; // Display loading state until the data is fetched
+    return <Text>Loading...</Text>; 
   }
 
   const handleOrders = () => {
     router.push('/OrdersScreen');
   };
 
-  // const { first_name, last_name, age, height, current_weight, gender, points, wallet } = userProfile.user;
+  const handleChat=()=>{
+    router.push('/ChatRoomsScreen')
+   }
 
   return (
     <MainView>
@@ -109,6 +111,12 @@ const UserProfile = () => {
         <Card style={styles.card} onPress={handleOrders}>
           <Card.Content>
             <Text style={styles.ordersText}>View Your Orders</Text>
+          </Card.Content>
+        </Card>
+
+        <Card style={styles.card} onPress={handleChat}>
+          <Card.Content>
+            <Text style={styles.ordersText}>View Your Chats</Text>
           </Card.Content>
         </Card>
 
