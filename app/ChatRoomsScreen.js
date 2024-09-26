@@ -8,7 +8,7 @@ import Rooms from "../components/Rooms";
 const ChatRoomsScreen = () => {
     const {authState} = useAuth();
     const [rooms, setRooms] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading , setLoading] = useState(true);
 
     useEffect(() => {
         const fetchRooms = async () => {

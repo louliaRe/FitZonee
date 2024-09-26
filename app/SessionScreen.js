@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef,useMemo } from 'react';
 import { ScrollView,View,  Text,Image,StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import { Button, IconButton ,Card } from 'react-native-paper';
 import { useAuth } from './AuthContext';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
@@ -13,14 +12,15 @@ const SessionScreen = () => {
   const { info } = useLocalSearchParams();
   const im = 'http://192.168.43.228:8000';
 
-  const parsedInfo = info ? JSON.parse(info) : {};
+  const parsedInfo = info ? JSON.parse(info) : {};     
 
   const [workout, setWorkout] = useState(parsedInfo);
   const [noWorkout, setNoWorkout] = useState(false);
-  const [equipmentStatus,setEquipmentStatus]= useState(null);
+  const [equipmentStatus,setEquipmentStatus]= useState(true);
+
   const [currentExercise, setCurrentExercise] = useState(null);
   const [isFirstExercise, setIsFirstExercise] = useState(true);
-  const [equDetails, setEquDetails]= useState({});
+  const [equDetails, setEquDetails]= useState(null);
   const ws = useRef(null);
 
   const socketUrl = useMemo(() => {
@@ -56,36 +56,31 @@ const SessionScreen = () => {
       console.log("mmmmmmmmmmmmmmmmmmmmmmmmm")
       try {
         const message = JSON.parse(event.data);
-        // const msg =JSON.parse(event)
         console.log('Received message:', message);
         if(event.limited_exercises){
           alert("you can't do this exercise , it will heart you! ")
         }
         console.log('Received message limited_exercises:', message.limited_exercises);
-
-        // if (msg.event.status){
-        // const status=msg.event.status
-        // console.log("ssttaattuuss:", status);
-        //   setEquipmentStatus(status);
-        // }
+        if (message?.exercise){
+          setCurrentExercise(message.exercise)
+        }
         if(message?.error){
           Alert.alert('Error', message.error);
         }
 
-        if (message?.exercise) {
-          setCurrentExercise(message.exercise);
-          setIsFirstExercise(false);
-        }
+
         console.log('current exercise:', currentExercise)
         
         if (message?.tracked_equipments) {
           message.tracked_equipments.forEach((trackedEquipment) => {
             console.log('Tracked Equipment:', trackedEquipment);
             console.log('Tracked Equipment status:', trackedEquipment.status);
+            setEquipmentStatus(trackedEquipment.status);
 
             if (trackedEquipment.equipment_details) {
               console.log('Equipment Details:', trackedEquipment.equipment_details);
               setEquDetails(trackedEquipment.equipment_details)
+            
               console.log('Equipment Details Cat:', trackedEquipment.equipment_details.category);
               console.log("trackedEquipment.equipment_details.exercise: ",trackedEquipment.equipment_details.exercise)
             } else {
@@ -114,6 +109,7 @@ const SessionScreen = () => {
       Alert.alert('WebSocket Error', error.message);
     };
 
+    console.log("eq st", equipmentStatus)
     // Cleanup to close socket
     return () => {
       if (ws.current) {
@@ -132,8 +128,7 @@ const SessionScreen = () => {
     
     const handleStartExercise = () => {
       if (currentExercise && equDetails) {
-        // Ensure you have equipment_type and other details from `currentExercise`
-        // Replace the following line with actual logic to determine equipment type and equipment ID
+
         const equipmentType = equDetails.category || 'Unknown';
         const equipmentId = currentExercise?.equipment || 'Unknown';
     
@@ -221,7 +216,7 @@ const SessionScreen = () => {
           </View>
 
           <View>
-            <Text style={styles.TE}>Equipment Status: {equipmentStatus}</Text>
+            <Text style={styles.TE}>Equipment Status: {equipmentStatus? 'Available': 'Unavailabe'}</Text>
           </View>
 
           {currentExercise.video_path ? (
@@ -239,7 +234,7 @@ const SessionScreen = () => {
       )}
 
       <Button
-        onPress={handleStartExercise} mode='outline'  textColor='#fff'  style={styles.bb} >Start Exercise</Button>
+        onPress={handleStartExercise} mode='outline'  textColor='#a1E533'  style={{boarderColor: '#a1E533'}} >Start Exercise</Button>
       
         <Button onPress={handleFinishExercise} mode='outlined' textColor='#a1E533' style={{boarderColor: '#a1E533'}}>Finish Exercise</Button>
       
@@ -250,7 +245,7 @@ const SessionScreen = () => {
       </View>
       
       
-      <Card.Actions>
+                <Card.Actions>
                                 <IconButton
                                  style={styles.iconButton}
                                     icon="stop"

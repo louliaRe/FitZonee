@@ -147,19 +147,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#2C2C2C',
   },
   userInfo: {
-    flex: 1,              // Ensures the userInfo section takes up available space
-    flexDirection: 'row', // Arranges the name and chat icon in a row
-    alignItems: 'center', // Vertically aligns items
+    flex: 1,             
+    flexDirection: 'row',
+    alignItems: 'center', 
   },
   name: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#a1E533',
     flex: 1,    
-    marginLeft:5,          // Ensures the name takes up available space
-  },
+    marginLeft:5,        
+    },
   chatIcon: {
-    marginLeft: 5,       // Adds some space between the name and the chat icon
+    marginLeft: 5,       
     
     backgroundColor: '#a1E533', 
     color: '#a1E533',

@@ -13,6 +13,7 @@ const QRCodeScanner = () => {
   const [scanned, setScanned] = useState(false);
   const [info , setInfo]= useState({});
   const [details, setDetails] = useState({});
+  const [clientApproved, setClientApproved] = useState(false);
 
   console.log("auth in scanner",authState)
 
@@ -43,14 +44,11 @@ const QRCodeScanner = () => {
   
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    // QR code data, navigate to SessionScreen
-console.log(data);
-    if (clientApproved) {
-      router.push('/SessionScreen');
-    } else {
-      Alert.alert('Error', 'Client did not approve.');
-    }
+    console.log('data in', data)
+    router.push({pathname:('/SessionScreen'),
+params:{info: JSON.stringify(info),
+    details: JSON.stringify(details),}
+});
   };
 
   const handleStartSession = () => {
@@ -64,13 +62,13 @@ params:{info: JSON.stringify(info),
   return (
 <MainView>
     <View  style={styles.container}>
-      {/* <BarCodeScanner
+      <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={{ flex: 1, width: '100%' }}
       />
       {scanned && (
         <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
-      )} */}
+      )}
       {/* Manually start session */}
       <Button
         

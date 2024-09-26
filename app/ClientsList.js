@@ -12,6 +12,7 @@ const ClientsList = () => {
   const { authState } = useAuth();
   const { group } = useLocalSearchParams();
   const [trainees, setTrainees] = useState([]);
+  const [loading, setLoading]= useState(false);
   
   let parsedGroup;
 

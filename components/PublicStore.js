@@ -60,14 +60,7 @@ const handleProduct=(id)=>{
 }
 
 
-  if (loading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#8ee53f" />
-      </View>
-    );
-  }
-
+ 
   return (
     <View style={styles.container}>
       <Searchbar

@@ -1,4 +1,3 @@
-// Post.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
 import { Card, Button, Avatar } from 'react-native-paper';
@@ -31,7 +30,6 @@ const Post = ({ post }) => {
       <Card.Content>
         <Text style={styles.time}>{new Date(post.created_at).toLocaleDateString()}</Text>
         <Text style={styles.post}>{post.content}</Text>
-{/*  {new Date(order.created_at).toLocaleDateString() */}
         {post.images && post.images.length > 0 && post.images.map((im) => (
           <Image key={im.id} source={{ uri: im.image }} style={styles.img} />
         ))}

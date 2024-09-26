@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { Text, StyleSheet, View, ScrollView, ActivityIndicator } from "react-native";
 import MainView from '../components/MainView';
 import { Searchbar } from 'react-native-paper';
 import Course from '../components/Course';
@@ -9,6 +9,7 @@ import { useAuth } from './AuthContext';
 
 
 const Courses = () => {
+  const [loading, setLoading]= useState(false)
   const router = useRouter();
   const { authState } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +19,7 @@ const Courses = () => {
 
 useEffect(()=>{
   const fetchCourses= async ()=>{
+    setLoading(true);
   try{
    
     const res = await getClasses(authState.accessToken, authState.branch_id);
@@ -25,15 +27,23 @@ useEffect(()=>{
     const validCourses = res.filter(course => course !== null);
     setCourses(validCourses);
     console.log('validCourses', validCourses);
+    setLoading(false);
   }catch(e){
     console.log("err fetching courses",e);
+    setLoading(false);
   }
 };fetchCourses();
 },[authState.accessToken, authState.branch_id])
 
 console.log ('courses', courses)
 
-
+if (loading) {
+  return (
+    <View style={styles.loaderContainer}>
+      <ActivityIndicator size="large" color="#8ee53f" />
+    </View>
+  );
+}
   return (
     <MainView>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -44,9 +54,13 @@ console.log ('courses', courses)
           style={styles.searchBar}
         />
         <View style={styles.courseContainer}>
-          {courses.map((course, index) => (
-            <Course key={course.class_id} course={course} />
-          ))}
+        {courses.length > 0 ? (
+        courses.map((course, index) => (
+          <Course key={course.class_id} course={course} />
+        ))
+      ) : (
+        <Text style={styles.centerText}>We're sorry, there are no courses yet !</Text>
+      )}
         </View>
       </ScrollView>
     </MainView>
@@ -65,6 +79,20 @@ const styles = StyleSheet.create({
   courseContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  }, centerText: {
+    textAlign: 'center', // centers text horizontally
+    flex: 1,
+    justifyContent: 'center', // centers text vertically
+    alignItems: 'center',
+    fontSize: 16,
+    color: '#a1e533',
+    paddingVertical: 20,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#2d2d2d'
   },
 });
 

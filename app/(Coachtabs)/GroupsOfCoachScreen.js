@@ -14,17 +14,22 @@ const GroupsOfCoachScreen = () => {
   const [groups, setGroups] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showText, setShowText] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchGroups = async () => {
+    setLoading(true);
     try {
       const fetchedGroups = await getGroups(authState.accessToken);
       if (fetchedGroups && Array.isArray(fetchedGroups)) {
         setGroups(fetchedGroups);
+        setLoading(false);
       } else {
         console.error("Fetched groups are invalid", fetchedGroups);
       }
     } catch (error) {
       console.log('Error fetching groups', error);
+      alert(error);
+      setLoading(false);
     }
   };
   

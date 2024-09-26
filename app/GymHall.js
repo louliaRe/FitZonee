@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { Modal, Portal, Button, Provider, Paragraph, Card } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import {ShowHall} from './API/ClientAPI';
@@ -9,19 +9,22 @@ import { Video } from 'expo-av'; // Import Video component
 
 const GymHall = () => {
     const [hallData, setHallData] = useState(null);
+    const [loading, setLoading]= useState(false);
     const [selectedMachine, setSelectedMachine] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const router = useRouter();
     const { authState } = useAuth();
+    
   const im= `http://192.168.43.228:8000`;
     useEffect(() => {
-
+         setLoading(true)
         const fetchHallData = async () => {
             try {
                 const res = await ShowHall(authState.accessToken, authState.branch_id);
                 console.log('res fetch Hall', res);
                 if (res && res.length > 0) {
                     setHallData(res[0]);
+                    setLoading(false);
                 }
             } catch (e) {
                 console.log(e);
@@ -56,7 +59,9 @@ const GymHall = () => {
         const gridItems = [];
     
         if (!hallData) {
-            return null; // If no data is available yet
+            return (
+                <Text style={styles.centerText}>There is no Hall exist yet!</Text>
+            ); 
         }
 
         const { hallWidth, hallHeight, equipments } = {
@@ -90,6 +95,14 @@ const GymHall = () => {
         }
         return gridItems;
     };
+
+    if (loading) {
+        return (
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color="#8ee53f" />
+          </View>
+        );
+      }
 
     return (
         <Provider style={styles.hall}>
@@ -209,6 +222,21 @@ const styles = StyleSheet.create({
     btn: {
         color: '#a1E533',
     },
+    centerText: {
+        textAlign: 'center',   
+        flex: 1,              
+        justifyContent: 'center', 
+        alignItems: 'center',
+        fontSize: 16,
+        padding: 20,
+        color: 'gray',
+      },
+      loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:'#2d2d2d'
+      },
 
 });
 

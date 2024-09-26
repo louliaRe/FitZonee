@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { Avatar, Card, Button, Title, Paragraph } from 'react-native-paper';
 import { useAuth } from '../AuthContext'
-import { useRouter } from 'expo-router'; // For routing
-import { getProfile } from '../API/ClientAPI'; // Assuming you have a profile API
-import Icon from 'react-native-vector-icons/MaterialIcons'; // For icons
+import { useRouter } from 'expo-router'; 
+import { getProfile,currentStatus } from '../API/ClientAPI'; 
+import Icon from 'react-native-vector-icons/MaterialIcons'; //  icons
 import MainView from '../../components/MainView';
+import RatingComponent from '../../components/RatingComponent'; 
+import { rate } from '../API/ClientAPI';
 
 const UserProfile = () => {
   const { authState, logout } = useAuth();
   const { username } = authState;
   const router = useRouter();
-  const [userProfile, setUserProfile] = useState(null); // Store user data
+  const [userProfile, setUserProfile] = useState(null); 
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -26,8 +28,22 @@ const UserProfile = () => {
     fetchInfo();
   }, [authState.accessToken]);
 
+  useEffect(()=>{
+    const fetchCoach= async()=>{
+      try{
+        const response= await currentStatus(authState.accessToken);
+        console.log('response of get current', response);
+      }catch(error){
+        console.log('Error in get current', error);
+      }
+    }
+  })
+
   if (!userProfile) {
-    return <Text>Loading...</Text>; 
+    return(  <View style={styles.loader}>
+    <ActivityIndicator size="large" color="#8ee53f" />
+  </View>
+);
   }
 
   const handleOrders = () => {
@@ -37,6 +53,28 @@ const UserProfile = () => {
   const handleChat=()=>{
     router.push('/ChatRoomsScreen')
    }
+
+   const handleTrainerRegist=()=>{
+    router.push('/TrainerRegistrationScreen');
+   }
+
+   const handleRatingSubmit = async (rating) => {
+    console.log("ra",rating);
+    const payload = {
+      value: rating,
+      gym: null, // Gym branch ID for both cases
+      trainer:  null, // Include trainer ID if rating the trainer
+      is_app_rate: true,
+    };
+   console.log('the payload', payload);
+    try {
+      await rate(authState.accessToken, payload);
+      alert('Rating submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      alert('Failed to submit rating', error.join(', '));
+    }
+  };
 
   return (
     <MainView>
@@ -120,8 +158,18 @@ const UserProfile = () => {
           </Card.Content>
         </Card>
 
+        <Card style={styles.card} onPress={handleTrainerRegist}>
+          <Card.Content>
+            <Text style={styles.ordersText}>Your trainer registration</Text>
+          </Card.Content>
+        </Card>
+        {/* Rating Section */}
+        <Card style={styles.card}>
+          <RatingComponent onSubmit={handleRatingSubmit}/>
+        </Card>
+
         {/* Logout Button */}
-        <Button style={styles.btn} onPress={logout}>Logout</Button>
+        <Button style={styles.btn} textColor='#2c2c2c' onPress={logout}>Logout</Button>
       </ScrollView>
     </MainView>
   );
@@ -139,6 +187,12 @@ const styles = StyleSheet.create({
   },
   avatar: {
     backgroundColor: '#2C2C2C',
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#2d2d2d'
   },
   userInfo: {
     marginLeft: 10,
@@ -177,8 +231,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#a1E533',
-    color: "#fff",
     marginTop: 20,
+    marginBottom:20,
   },
 });
 
