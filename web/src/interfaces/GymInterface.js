@@ -46,7 +46,6 @@ const GymInterface=()=>{
          
     
       return (
-        <Layout>
         <Container>
             <div className="TB">
                 <h1 style={{ color: '#fff' }}>Gyms Table</h1>
@@ -103,7 +102,6 @@ const GymInterface=()=>{
                 </div>
         <GymsTable initdata={gyms} />
       </Container>
-      </Layout>
       )
 }
 export default GymInterface;

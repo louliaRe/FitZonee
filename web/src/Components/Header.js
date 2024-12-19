@@ -12,14 +12,14 @@ import { useNavigate } from 'react-router-dom';
 import Logo from "./Logo";
 
 const Header = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const theme = useMantineTheme();
     
   
 
     const handleLogout = () => {
       
-        navigate("/login");
+        // navigate("/login");
         window.location.reload();
     };
    
